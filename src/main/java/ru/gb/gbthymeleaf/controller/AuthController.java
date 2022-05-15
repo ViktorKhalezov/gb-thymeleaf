@@ -8,16 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.gb.gbapi.security.AuthenticationUserDto;
-import ru.gb.gbapi.security.UserDto;
-import ru.gb.gbshopmart.service.UserService; // исправить
+import ru.gb.gb.api.security.AuthenticationUserDto;
+import ru.gb.gb.api.security.UserDto;
+import ru.gb.api.security.api.AuthGateway;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthGateway authGateway;
 
     @GetMapping
     public String getLogin(Model model) {
@@ -27,11 +29,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String loginUser(AuthenticationUserDto authenticationUserDto){
-        ResponseEntity<AuthenticationUserDto> response = userService.login(authenticationUserDto);
-        if (response.getStatusCode() == HttpStatus.OK)
+    public String loginUser(AuthenticationUserDto authenticationUserDto, HttpServletResponse response){
+            response.addCookie(new Cookie("jwt", authGateway.login(authenticationUserDto).getBody().get("token")));
             return "redirect:/product";
-        else
-            return "auth-form";
     }
+
 }

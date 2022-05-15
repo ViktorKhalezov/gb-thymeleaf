@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.gb.gbapi.security.AuthenticationUserDto;
-import ru.gb.gbapi.security.UserDto;
-import ru.gb.gbshopmart.service.UserService;
+import ru.gb.gb.api.security.AuthenticationUserDto;
+import ru.gb.gb.api.security.UserDto;
+import ru.gb.gbthymeleaf.service.UserService;
 
 
 @Controller
